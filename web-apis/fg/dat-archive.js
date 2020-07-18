@@ -1,5 +1,5 @@
 const { contextBridge, webFrame } = require('electron')
-const errors = require('beaker-error-constants')
+const errors = require('dbrowser-error-messages')
 const datArchiveManifest = require('../manifests/external/dat-archive')
 const { exportEventStreamFn } = require('./event-target')
 
@@ -405,7 +405,7 @@ exports.setupAndExpose = function (rpc) {
   }
 
   // add internal methods
-  if (window.location.protocol === 'beaker:') {
+  if (window.location.protocol === 'dbrowser:') {
     DatArchive.importFromFilesystem = async function (opts = {}) {
       return await __dat.importFromFilesystem(opts)
     }

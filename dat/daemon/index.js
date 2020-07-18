@@ -12,15 +12,15 @@ const jetpack = require('fs-jetpack')
 const {join} = require('path')
 
 // dat modules
-const hyperdrive = require('hyperdrive')
-const hypercoreProtocol = require('hypercore-protocol')
-const pda = require('pauls-dat-api')
+const dwebfs = require('dwebfs')
+const hypercoreProtocol = require('ddatabase-protocol')
+const pda = require('dbrowser-dweb-api')
 const datEncoding = require('dat-encoding')
 
 // network modules
-const swarmDefaults = require('datland-swarm-defaults')
-const discoverySwarm = require('discovery-swarm')
-const networkSpeed = require('hyperdrive-network-speed')
+const swarmDefaults = require('dbrowser-swarm-defaults')
+const discoverySwarm = require('dweb-discovery-swarm')
+const networkSpeed = require('dwebfs-network-speed')
 const {ThrottleGroup} = require('stream-throttle')
 
 const datStorage = require('./storage')
@@ -181,7 +181,7 @@ const RPC_API = {
     } = opts
 
     // create the archive instance
-    var archive = hyperdrive(datStorage.create(metaPath), key, {
+    var archive = dwebfs(datStorage.create(metaPath), key, {
       sparse: true,
       secretKey
       // metadataStorageCacheSize: 0,
@@ -407,7 +407,7 @@ const leaveSwarm = exports.leaveSwarm = function leaveSwarm (key) {
 // =
 
 function getArchive (key) {
-  if (key instanceof hyperdrive) return key
+  if (key instanceof dwebfs) return key
   if (key.key) key = key.key
   return archives[datEncoding.toStr(key)]
 }
@@ -453,7 +453,7 @@ function configureAutoDownload (archive, userSettings) {
     return // abort, only used for unwritable
   }
   // HACK
-  // mafintosh is planning to put APIs for this inside of hyperdrive
+  // mafintosh is planning to put APIs for this inside of dwebfs
   // till then, we'll do our own inefficient downloader
   // -prf
   const isAutoDownloading = userSettings.isSaved && userSettings.autoDownload

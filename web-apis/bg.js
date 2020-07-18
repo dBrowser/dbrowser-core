@@ -1,6 +1,6 @@
 const globals = require('../globals')
 
-const SECURE_ORIGIN_REGEX = /^(beaker:|dat:|https:|http:\/\/localhost(\/|:))/i
+const SECURE_ORIGIN_REGEX = /^(dbrowser:|dat:|https:|http:\/\/localhost(\/|:))/i
 
 // internal manifests
 const archivesManifest = require('./manifests/internal/archives')
@@ -42,7 +42,7 @@ const experimentalLibraryAPI = require('./bg/experimental/library')
 exports.setup = function () {
   // internal apis
   globals.rpcAPI.exportAPI('archives', archivesManifest, archivesAPI, internalOnly)
-  globals.rpcAPI.exportAPI('beaker-browser', beakerBrowserManifest, globals.browserWebAPI, internalOnly)
+  globals.rpcAPI.exportAPI('dbrowser-x', beakerBrowserManifest, globals.browserWebAPI, internalOnly)
   globals.rpcAPI.exportAPI('bookmarks', bookmarksManifest, bookmarksAPI, internalOnly)
   globals.rpcAPI.exportAPI('downloads', downloadsManifest, globals.downloadsWebAPI, internalOnly)
   globals.rpcAPI.exportAPI('history', historyManifest, historyAPI, internalOnly)
@@ -60,7 +60,7 @@ exports.setup = function () {
 }
 
 function internalOnly (event, methodName, args) {
-  return (event && event.sender && event.sender.getURL().startsWith('beaker:'))
+  return (event && event.sender && event.sender.getURL().startsWith('dbrowser:'))
 }
 
 function secureOnly (event, methodName, args) {

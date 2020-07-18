@@ -1,5 +1,5 @@
 const { EventTarget, bindEventStream, fromEventStream } = require('./event-target')
-const errors = require('beaker-error-constants')
+const errors = require('dbrowser-error-messages')
 
 const archivesManifest = require('../manifests/internal/archives')
 const beakerBrowserManifest = require('../manifests/internal/browser')
@@ -10,145 +10,145 @@ const sitedataManifest = require('../manifests/internal/sitedata')
 const watchlistManifest = require('../manifests/internal/watchlist')
 
 exports.setup = function (rpc) {
-  const beaker = {}
+  const dbrowserx = {}
   const opts = { timeout: false, errors }
 
   // internal only
-  if (window.location.protocol === 'beaker:') {
+  if (window.location.protocol === 'dbrowser:') {
     const archivesRPC = rpc.importAPI('archives', archivesManifest, opts)
-    const beakerBrowserRPC = rpc.importAPI('beaker-browser', beakerBrowserManifest, opts)
+    const beakerBrowserRPC = rpc.importAPI('dbrowser-x', beakerBrowserManifest, opts)
     const bookmarksRPC = rpc.importAPI('bookmarks', bookmarksManifest, opts)
     const downloadsRPC = rpc.importAPI('downloads', downloadsManifest, opts)
     const historyRPC = rpc.importAPI('history', historyManifest, opts)
     const sitedataRPC = rpc.importAPI('sitedata', sitedataManifest, opts)
     const watchlistRPC = rpc.importAPI('watchlist', watchlistManifest, opts)
 
-    // beaker.archives
-    beaker.archives = new EventTarget()
-    beaker.archives.status = archivesRPC.status
-    beaker.archives.add = archivesRPC.add
-    beaker.archives.setUserSettings = archivesRPC.setUserSettings
-    beaker.archives.remove = archivesRPC.remove
-    beaker.archives.bulkRemove = archivesRPC.bulkRemove
-    beaker.archives.delete = archivesRPC.delete
-    beaker.archives.list = archivesRPC.list
-    beaker.archives.validateLocalSyncPath = archivesRPC.validateLocalSyncPath
-    beaker.archives.setLocalSyncPath = archivesRPC.setLocalSyncPath
-    beaker.archives.ensureLocalSyncFinished = archivesRPC.ensureLocalSyncFinished
-    beaker.archives.diffLocalSyncPathListing = archivesRPC.diffLocalSyncPathListing
-    beaker.archives.diffLocalSyncPathFile = archivesRPC.diffLocalSyncPathFile
-    beaker.archives.publishLocalSyncPathListing = archivesRPC.publishLocalSyncPathListing
-    beaker.archives.revertLocalSyncPathListing = archivesRPC.revertLocalSyncPathListing
-    beaker.archives.getDraftInfo = archivesRPC.getDraftInfo
-    beaker.archives.listDrafts = archivesRPC.listDrafts
-    beaker.archives.addDraft = archivesRPC.addDraft
-    beaker.archives.removeDraft = archivesRPC.removeDraft
-    beaker.archives.getTemplate = archivesRPC.getTemplate
-    beaker.archives.listTemplates = archivesRPC.listTemplates
-    beaker.archives.putTemplate = archivesRPC.putTemplate
-    beaker.archives.removeTemplate = archivesRPC.removeTemplate
-    beaker.archives.touch = archivesRPC.touch
-    beaker.archives.clearFileCache = archivesRPC.clearFileCache
-    beaker.archives.clearGarbage = archivesRPC.clearGarbage
-    beaker.archives.clearDnsCache = archivesRPC.clearDnsCache
-    beaker.archives.getDebugLog = archivesRPC.getDebugLog
-    beaker.archives.createDebugStream = () => fromEventStream(archivesRPC.createDebugStream())
+    // dbrowserx.archives
+    dbrowserx.archives = new EventTarget()
+    dbrowserx.archives.status = archivesRPC.status
+    dbrowserx.archives.add = archivesRPC.add
+    dbrowserx.archives.setUserSettings = archivesRPC.setUserSettings
+    dbrowserx.archives.remove = archivesRPC.remove
+    dbrowserx.archives.bulkRemove = archivesRPC.bulkRemove
+    dbrowserx.archives.delete = archivesRPC.delete
+    dbrowserx.archives.list = archivesRPC.list
+    dbrowserx.archives.validateLocalSyncPath = archivesRPC.validateLocalSyncPath
+    dbrowserx.archives.setLocalSyncPath = archivesRPC.setLocalSyncPath
+    dbrowserx.archives.ensureLocalSyncFinished = archivesRPC.ensureLocalSyncFinished
+    dbrowserx.archives.diffLocalSyncPathListing = archivesRPC.diffLocalSyncPathListing
+    dbrowserx.archives.diffLocalSyncPathFile = archivesRPC.diffLocalSyncPathFile
+    dbrowserx.archives.publishLocalSyncPathListing = archivesRPC.publishLocalSyncPathListing
+    dbrowserx.archives.revertLocalSyncPathListing = archivesRPC.revertLocalSyncPathListing
+    dbrowserx.archives.getDraftInfo = archivesRPC.getDraftInfo
+    dbrowserx.archives.listDrafts = archivesRPC.listDrafts
+    dbrowserx.archives.addDraft = archivesRPC.addDraft
+    dbrowserx.archives.removeDraft = archivesRPC.removeDraft
+    dbrowserx.archives.getTemplate = archivesRPC.getTemplate
+    dbrowserx.archives.listTemplates = archivesRPC.listTemplates
+    dbrowserx.archives.putTemplate = archivesRPC.putTemplate
+    dbrowserx.archives.removeTemplate = archivesRPC.removeTemplate
+    dbrowserx.archives.touch = archivesRPC.touch
+    dbrowserx.archives.clearFileCache = archivesRPC.clearFileCache
+    dbrowserx.archives.clearGarbage = archivesRPC.clearGarbage
+    dbrowserx.archives.clearDnsCache = archivesRPC.clearDnsCache
+    dbrowserx.archives.getDebugLog = archivesRPC.getDebugLog
+    dbrowserx.archives.createDebugStream = () => fromEventStream(archivesRPC.createDebugStream())
     window.addEventListener('load', () => {
       try {
-        bindEventStream(archivesRPC.createEventStream(), beaker.archives)
+        bindEventStream(archivesRPC.createEventStream(), dbrowserx.archives)
       } catch (e) {
         // permissions error
       }
     })
 
-    // beaker.browser
-    beaker.browser = {}
-    beaker.browser.createEventsStream = () => fromEventStream(beakerBrowserRPC.createEventsStream())
-    beaker.browser.getInfo = beakerBrowserRPC.getInfo
-    beaker.browser.checkForUpdates = beakerBrowserRPC.checkForUpdates
-    beaker.browser.restartBrowser = beakerBrowserRPC.restartBrowser
-    beaker.browser.getSetting = beakerBrowserRPC.getSetting
-    beaker.browser.getSettings = beakerBrowserRPC.getSettings
-    beaker.browser.setSetting = beakerBrowserRPC.setSetting
-    beaker.browser.getUserSetupStatus = beakerBrowserRPC.getUserSetupStatus
-    beaker.browser.setUserSetupStatus = beakerBrowserRPC.setUserSetupStatus
-    beaker.browser.getDefaultLocalPath = beakerBrowserRPC.getDefaultLocalPath
-    beaker.browser.setStartPageBackgroundImage = beakerBrowserRPC.setStartPageBackgroundImage
-    beaker.browser.getDefaultProtocolSettings = beakerBrowserRPC.getDefaultProtocolSettings
-    beaker.browser.setAsDefaultProtocolClient = beakerBrowserRPC.setAsDefaultProtocolClient
-    beaker.browser.removeAsDefaultProtocolClient = beakerBrowserRPC.removeAsDefaultProtocolClient
-    beaker.browser.fetchBody = beakerBrowserRPC.fetchBody
-    beaker.browser.downloadURL = beakerBrowserRPC.downloadURL
-    beaker.browser.getResourceContentType = beakerBrowserRPC.getResourceContentType
-    beaker.browser.listBuiltinFavicons = beakerBrowserRPC.listBuiltinFavicons
-    beaker.browser.getBuiltinFavicon = beakerBrowserRPC.getBuiltinFavicon
-    beaker.browser.uploadFavicon = beakerBrowserRPC.uploadFavicon
-    beaker.browser.imageToIco = beakerBrowserRPC.imageToIco
-    beaker.browser.setWindowDimensions = beakerBrowserRPC.setWindowDimensions
-    beaker.browser.showOpenDialog = beakerBrowserRPC.showOpenDialog
-    beaker.browser.showContextMenu = beakerBrowserRPC.showContextMenu
-    beaker.browser.openUrl = beakerBrowserRPC.openUrl
-    beaker.browser.openFolder = beakerBrowserRPC.openFolder
-    beaker.browser.doWebcontentsCmd = beakerBrowserRPC.doWebcontentsCmd
-    beaker.browser.doTest = beakerBrowserRPC.doTest
-    beaker.browser.closeModal = beakerBrowserRPC.closeModal
+    // dbrowserx.browser
+    dbrowserx.browser = {}
+    dbrowserx.browser.createEventsStream = () => fromEventStream(beakerBrowserRPC.createEventsStream())
+    dbrowserx.browser.getInfo = beakerBrowserRPC.getInfo
+    dbrowserx.browser.checkForUpdates = beakerBrowserRPC.checkForUpdates
+    dbrowserx.browser.restartBrowser = beakerBrowserRPC.restartBrowser
+    dbrowserx.browser.getSetting = beakerBrowserRPC.getSetting
+    dbrowserx.browser.getSettings = beakerBrowserRPC.getSettings
+    dbrowserx.browser.setSetting = beakerBrowserRPC.setSetting
+    dbrowserx.browser.getUserSetupStatus = beakerBrowserRPC.getUserSetupStatus
+    dbrowserx.browser.setUserSetupStatus = beakerBrowserRPC.setUserSetupStatus
+    dbrowserx.browser.getDefaultLocalPath = beakerBrowserRPC.getDefaultLocalPath
+    dbrowserx.browser.setStartPageBackgroundImage = beakerBrowserRPC.setStartPageBackgroundImage
+    dbrowserx.browser.getDefaultProtocolSettings = beakerBrowserRPC.getDefaultProtocolSettings
+    dbrowserx.browser.setAsDefaultProtocolClient = beakerBrowserRPC.setAsDefaultProtocolClient
+    dbrowserx.browser.removeAsDefaultProtocolClient = beakerBrowserRPC.removeAsDefaultProtocolClient
+    dbrowserx.browser.fetchBody = beakerBrowserRPC.fetchBody
+    dbrowserx.browser.downloadURL = beakerBrowserRPC.downloadURL
+    dbrowserx.browser.getResourceContentType = beakerBrowserRPC.getResourceContentType
+    dbrowserx.browser.listBuiltinFavicons = beakerBrowserRPC.listBuiltinFavicons
+    dbrowserx.browser.getBuiltinFavicon = beakerBrowserRPC.getBuiltinFavicon
+    dbrowserx.browser.uploadFavicon = beakerBrowserRPC.uploadFavicon
+    dbrowserx.browser.imageToIco = beakerBrowserRPC.imageToIco
+    dbrowserx.browser.setWindowDimensions = beakerBrowserRPC.setWindowDimensions
+    dbrowserx.browser.showOpenDialog = beakerBrowserRPC.showOpenDialog
+    dbrowserx.browser.showContextMenu = beakerBrowserRPC.showContextMenu
+    dbrowserx.browser.openUrl = beakerBrowserRPC.openUrl
+    dbrowserx.browser.openFolder = beakerBrowserRPC.openFolder
+    dbrowserx.browser.doWebcontentsCmd = beakerBrowserRPC.doWebcontentsCmd
+    dbrowserx.browser.doTest = beakerBrowserRPC.doTest
+    dbrowserx.browser.closeModal = beakerBrowserRPC.closeModal
 
-    // beaker.bookmarks
-    beaker.bookmarks = {}
-    beaker.bookmarks.getBookmark = bookmarksRPC.getBookmark
-    beaker.bookmarks.isBookmarked = bookmarksRPC.isBookmarked
-    beaker.bookmarks.bookmarkPublic = bookmarksRPC.bookmarkPublic
-    beaker.bookmarks.unbookmarkPublic = bookmarksRPC.unbookmarkPublic
-    beaker.bookmarks.listPublicBookmarks = bookmarksRPC.listPublicBookmarks
-    beaker.bookmarks.setBookmarkPinned = bookmarksRPC.setBookmarkPinned
-    beaker.bookmarks.setBookmarkPinOrder = bookmarksRPC.setBookmarkPinOrder
-    beaker.bookmarks.listPinnedBookmarks = bookmarksRPC.listPinnedBookmarks
-    beaker.bookmarks.bookmarkPrivate = bookmarksRPC.bookmarkPrivate
-    beaker.bookmarks.unbookmarkPrivate = bookmarksRPC.unbookmarkPrivate
-    beaker.bookmarks.listPrivateBookmarks = bookmarksRPC.listPrivateBookmarks
-    beaker.bookmarks.listBookmarkTags = bookmarksRPC.listBookmarkTags
+    // dbrowserx.bookmarks
+    dbrowserx.bookmarks = {}
+    dbrowserx.bookmarks.getBookmark = bookmarksRPC.getBookmark
+    dbrowserx.bookmarks.isBookmarked = bookmarksRPC.isBookmarked
+    dbrowserx.bookmarks.bookmarkPublic = bookmarksRPC.bookmarkPublic
+    dbrowserx.bookmarks.unbookmarkPublic = bookmarksRPC.unbookmarkPublic
+    dbrowserx.bookmarks.listPublicBookmarks = bookmarksRPC.listPublicBookmarks
+    dbrowserx.bookmarks.setBookmarkPinned = bookmarksRPC.setBookmarkPinned
+    dbrowserx.bookmarks.setBookmarkPinOrder = bookmarksRPC.setBookmarkPinOrder
+    dbrowserx.bookmarks.listPinnedBookmarks = bookmarksRPC.listPinnedBookmarks
+    dbrowserx.bookmarks.bookmarkPrivate = bookmarksRPC.bookmarkPrivate
+    dbrowserx.bookmarks.unbookmarkPrivate = bookmarksRPC.unbookmarkPrivate
+    dbrowserx.bookmarks.listPrivateBookmarks = bookmarksRPC.listPrivateBookmarks
+    dbrowserx.bookmarks.listBookmarkTags = bookmarksRPC.listBookmarkTags
 
-    // beaker.downloads
-    beaker.downloads = {}
-    beaker.downloads.getDownloads = downloadsRPC.getDownloads
-    beaker.downloads.pause = downloadsRPC.pause
-    beaker.downloads.resume = downloadsRPC.resume
-    beaker.downloads.cancel = downloadsRPC.cancel
-    beaker.downloads.remove = downloadsRPC.remove
-    beaker.downloads.open = downloadsRPC.open
-    beaker.downloads.showInFolder = downloadsRPC.showInFolder
-    beaker.downloads.createEventsStream = () => fromEventStream(downloadsRPC.createEventsStream())
+    // dbrowserx.downloads
+    dbrowserx.downloads = {}
+    dbrowserx.downloads.getDownloads = downloadsRPC.getDownloads
+    dbrowserx.downloads.pause = downloadsRPC.pause
+    dbrowserx.downloads.resume = downloadsRPC.resume
+    dbrowserx.downloads.cancel = downloadsRPC.cancel
+    dbrowserx.downloads.remove = downloadsRPC.remove
+    dbrowserx.downloads.open = downloadsRPC.open
+    dbrowserx.downloads.showInFolder = downloadsRPC.showInFolder
+    dbrowserx.downloads.createEventsStream = () => fromEventStream(downloadsRPC.createEventsStream())
 
-    // beaker.history
-    beaker.history = {}
-    beaker.history.addVisit = historyRPC.addVisit
-    beaker.history.getVisitHistory = historyRPC.getVisitHistory
-    beaker.history.getMostVisited = historyRPC.getMostVisited
-    beaker.history.search = historyRPC.search
-    beaker.history.removeVisit = historyRPC.removeVisit
-    beaker.history.removeAllVisits = historyRPC.removeAllVisits
-    beaker.history.removeVisitsAfter = historyRPC.removeVisitsAfter
+    // dbrowserx.history
+    dbrowserx.history = {}
+    dbrowserx.history.addVisit = historyRPC.addVisit
+    dbrowserx.history.getVisitHistory = historyRPC.getVisitHistory
+    dbrowserx.history.getMostVisited = historyRPC.getMostVisited
+    dbrowserx.history.search = historyRPC.search
+    dbrowserx.history.removeVisit = historyRPC.removeVisit
+    dbrowserx.history.removeAllVisits = historyRPC.removeAllVisits
+    dbrowserx.history.removeVisitsAfter = historyRPC.removeVisitsAfter
 
-    // beaker.sitedata
-    beaker.sitedata = {}
-    beaker.sitedata.get = sitedataRPC.get
-    beaker.sitedata.set = sitedataRPC.set
-    beaker.sitedata.getPermissions = sitedataRPC.getPermissions
-    beaker.sitedata.getAppPermissions = sitedataRPC.getAppPermissions
-    beaker.sitedata.getPermission = sitedataRPC.getPermission
-    beaker.sitedata.setPermission = sitedataRPC.setPermission
-    beaker.sitedata.setAppPermissions = sitedataRPC.setAppPermissions
-    beaker.sitedata.clearPermission = sitedataRPC.clearPermission
-    beaker.sitedata.clearPermissionAllOrigins = sitedataRPC.clearPermissionAllOrigins
+    // dbrowserx.sitedata
+    dbrowserx.sitedata = {}
+    dbrowserx.sitedata.get = sitedataRPC.get
+    dbrowserx.sitedata.set = sitedataRPC.set
+    dbrowserx.sitedata.getPermissions = sitedataRPC.getPermissions
+    dbrowserx.sitedata.getAppPermissions = sitedataRPC.getAppPermissions
+    dbrowserx.sitedata.getPermission = sitedataRPC.getPermission
+    dbrowserx.sitedata.setPermission = sitedataRPC.setPermission
+    dbrowserx.sitedata.setAppPermissions = sitedataRPC.setAppPermissions
+    dbrowserx.sitedata.clearPermission = sitedataRPC.clearPermission
+    dbrowserx.sitedata.clearPermissionAllOrigins = sitedataRPC.clearPermissionAllOrigins
 
-    // beaker.watchlist
-    beaker.watchlist = {}
-    beaker.watchlist.add = watchlistRPC.add
-    beaker.watchlist.list = watchlistRPC.list
-    beaker.watchlist.update = watchlistRPC.update
-    beaker.watchlist.remove = watchlistRPC.remove
-    beaker.watchlist.createEventsStream = () => fromEventStream(watchlistRPC.createEventsStream())
+    // dbrowserx.watchlist
+    dbrowserx.watchlist = {}
+    dbrowserx.watchlist.add = watchlistRPC.add
+    dbrowserx.watchlist.list = watchlistRPC.list
+    dbrowserx.watchlist.update = watchlistRPC.update
+    dbrowserx.watchlist.remove = watchlistRPC.remove
+    dbrowserx.watchlist.createEventsStream = () => fromEventStream(watchlistRPC.createEventsStream())
   }
 
-  return beaker
+  return dbrowserx
 }

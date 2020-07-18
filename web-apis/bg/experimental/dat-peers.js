@@ -1,5 +1,5 @@
-const parseDatURL = require('parse-dat-url')
-const {PermissionsError} = require('beaker-error-constants')
+const parseDatURL = require('parse-dweb-url')
+const {PermissionsError} = require('dbrowser-error-messages')
 const globals = require('../../../globals')
 const datLibrary = require('../../../dat/library')
 const datDns = require('../../../dat/dns')
@@ -8,7 +8,7 @@ const {DAT_HASH_REGEX} = require('../../../lib/const')
 // constants
 // =
 
-const API_DOCS_URL = 'https://beakerbrowser.com/docs/apis/experimental-datpeers.html'
+const API_DOCS_URL = 'https://dbrowser.com/docs/apis/experimental-datpeers.html'
 const API_PERM_ID = 'experimentalDatPeers'
 const LAB_API_ID = 'datPeers'
 const LAB_PERMS_OBJ = {perm: API_PERM_ID, labApi: LAB_API_ID, apiDocsUrl: API_DOCS_URL}

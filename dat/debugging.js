@@ -36,7 +36,7 @@ exports.datDnsCachePage = function () {
     return `<tr><td><strong>${name}</strong></td><td>${key}</td></tr>`
   }).join('')}
       </table>
-      <script src="beaker://dat-dns-cache/main.js"></script>
+      <script src="dbrowser://dweb-dns-cache/main.js"></script>
     </body>
   </html>`
 }
@@ -45,7 +45,7 @@ exports.datDnsCacheJS = function () {
   return `
     document.querySelector('button').addEventListener('click', clear)
     async function clear () {
-      await beaker.archives.clearDnsCache()
+      await dbrowserx.archives.clearDnsCache()
       location.reload()
     }
   `

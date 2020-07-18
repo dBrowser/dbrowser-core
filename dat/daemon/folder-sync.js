@@ -5,9 +5,9 @@ const anymatch = require('anymatch')
 const fs = require('fs')
 const path = require('path')
 const EventEmitter = require('events')
-const pda = require('pauls-dat-api')
+const pda = require('dbrowser-dweb-api')
 const mkdirp = require('mkdirp')
-const {toAnymatchRules} = require('@beaker/datignore')
+const {toAnymatchRules} = require('dbrowser-dwebignore')
 const {isFileNameBinary, isFileContentBinary} = require('../../lib/mime')
 const lock = require('../../lib/lock')
 const scopedFSes = require('../../lib/scoped-fses')
@@ -18,7 +18,7 @@ const {
   ArchiveNotWritableError,
   InvalidEncodingError,
   SourceTooLargeError
-} = require('beaker-error-constants')
+} = require('dbrowser-error-messages')
 
 const MAX_DIFF_SIZE = bytes('100kb')
 
@@ -316,7 +316,7 @@ const readDatIgnore = exports.readDatIgnore = async function (fs) {
   return toAnymatchRules(rulesRaw)
 }
 
-// filter function used by scoped-fs to hide files in the datignore
+// filter function used by dbrowser-sfs to hide files in the datignore
 exports.applyDatIgnoreFilter = function (archive, filepath) {
   const datIgnoreRules = archive.datIgnoreRules || toAnymatchRules('')
   var filepaths = explodeFilePaths(filepath) // we need to check parent paths in addition to the target path

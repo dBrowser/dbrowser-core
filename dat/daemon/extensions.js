@@ -1,7 +1,7 @@
 const EventEmitter = require('events')
 const emitStream = require('emit-stream')
-const {DatSessionDataExtMsg} = require('@beaker/dat-session-data-ext-msg')
-const {DatEphemeralExtMsg} = require('@beaker/dat-ephemeral-ext-msg')
+const {DatSessionDataExtMsg} = require('dweb-session-data-ext-msg')
+const {DatEphemeralExtMsg} = require('dweb-epemeral-ext-msg')
 
 // globals
 // =

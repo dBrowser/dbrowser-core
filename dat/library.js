@@ -2,9 +2,9 @@ const emitStream = require('emit-stream')
 const EventEmitter = require('events')
 const datEncoding = require('dat-encoding')
 const pify = require('pify')
-const pda = require('pauls-dat-api')
+const pda = require('dbrowser-dweb-api')
 const signatures = require('sodium-signatures')
-const parseDatURL = require('parse-dat-url')
+const parseDatURL = require('parse-dweb-url')
 const debounce = require('lodash.debounce')
 const mkdirp = require('mkdirp')
 
@@ -23,7 +23,7 @@ const {
   DAT_HASH_REGEX,
   DAT_PRESERVED_FIELDS_ON_FORK
 } = require('../lib/const')
-const {InvalidURLError} = require('beaker-error-constants')
+const {InvalidURLError} = require('dbrowser-error-messages')
 const DAT_DAEMON_MANIFEST = require('./daemon/manifest')
 
 // globals
@@ -100,7 +100,7 @@ exports.loadSavedArchives = function () {
       // load the archives one at a time and give 5 seconds between each
       // why: the purpose of loading saved archives is to seed them
       // loading them all at once can bog down the user's device
-      // if the user tries to access an archive, Beaker will load it immediately
+      // if the user tries to access an archive, DBrowserX- will load it immediately
       // so spacing out the loads has no visible impact on the user
       // (except for reducing the overall load for the user)
       // -prf

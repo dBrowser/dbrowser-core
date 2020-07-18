@@ -1,6 +1,6 @@
-# Beaker Core
+# DBrowserX- Core
 
-[Beaker browser's](https://github.com/beakerbrowser/beaker) core software. Factored out so that we can build extensions from the same codebase.
+[DBrowserX- browser's](https://github.com/dbrowser/dbrowser) core software. Factored out so that we can build extensions from the same codebase.
 
 **Work in progress! Not ready to use.**
 
@@ -8,7 +8,7 @@ Here's how we use it in electron (the browser):
 
 ```js
 import {app, protocol} from 'electron'
-import beakerCore from '@beaker/core'
+import beakerCore from 'dbrowser-core'
 
 const DISALLOWED_SAVE_PATH_NAMES = [
   'home',
@@ -20,7 +20,7 @@ const DISALLOWED_SAVE_PATH_NAMES = [
   'videos'
 ]
 
-// setup beaker-core
+// setup dbrowserx-core
 await beakerCore.setup({
   // config
   userDataPath: app.getPath('userData'),
@@ -55,7 +55,7 @@ protocol.registerStreamProtocol('dat', beakerCore.dat.protocol.electronHandler, 
 In the webview preload:
 
 ```js
-import beakerCoreWebview from '@beaker/core/webview'
+import beakerCoreWebview from 'dbrowser-core/webview'
 
 beakerCoreWebview.setup({
   // APIs
@@ -65,7 +65,7 @@ beakerCoreWebview.setup({
 })
 ```
 
-## API (@beaker/core)
+## API (dbrowser-core)
 
 ### `setup()`
 
@@ -74,7 +74,7 @@ beakerCoreWebview.setup({
 ### `debugLogger(name)`
 
 ```js
-import {debugLogger} from '@beaker/core'
+import {debugLogger} from 'dbrowser-core'
 const debug = debugLogger('dat')
 
 // write to the debug log under 'dat'
@@ -115,6 +115,6 @@ debug('dat-related stuff')
 
 ### `dat.debug`
 
-## API (@beaker/core/webview)
+## API (dbrowser-core/webview)
 
 ### `setup()`

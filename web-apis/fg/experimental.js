@@ -1,7 +1,7 @@
 /* globals Request Response fetch */
 
 const {EventTargetFromStream} = require('./event-target')
-const errors = require('beaker-error-constants')
+const errors = require('dbrowser-error-messages')
 
 const experimentalLibraryManifest = require('../manifests/external/experimental/library')
 const experimentalGlobalFetchManifest = require('../manifests/external/experimental/global-fetch')
@@ -13,7 +13,7 @@ exports.setup = function (rpc) {
   const opts = {timeout: false, errors}
 
   // dat or internal only
-  if (window.location.protocol === 'beaker:' || window.location.protocol === 'dat:') {
+  if (window.location.protocol === 'dbrowser:' || window.location.protocol === 'dat:') {
     const libraryRPC = rpc.importAPI('experimental-library', experimentalLibraryManifest, opts)
     const globalFetchRPC = rpc.importAPI('experimental-global-fetch', experimentalGlobalFetchManifest, opts)
     const capturePageRPC = rpc.importAPI('experimental-capture-page', experimentalCapturePageManifest, opts)

@@ -15,7 +15,7 @@
     "url": "git+https://github.com/dbrowser/dbrowser-core.git"
   },
   "keywords": [
-    "beaker",
+    "dbrowserx",
     "dat"
   ],
   "author": "Paul Frazee <pfrazee@gmail.com>",
@@ -40,7 +40,7 @@
     "dbrowser-swarm-defaults": "^1.0.0",
     "diff": "^3.5.0",
     "diff-file-tree": "^2.3.2",
-    "dweb-discovery-swarm": "^1.2.0",
+    "dweb-dweb-discovery-swarm": "^1.2.0",
     "emit-stream": "^0.1.2",
     "fs-jetpack": "^1.3.1",
     "function-queue": "0.0.12",

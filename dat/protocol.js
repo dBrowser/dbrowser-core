@@ -1,10 +1,10 @@
 const {join} = require('path')
-const parseDatUrl = require('parse-dat-url')
+const parseDatUrl = require('parse-dweb-url')
 const parseRange = require('range-parser')
 const once = require('once')
 const debug = require('../lib/debug-logger').debugLogger('dat-serve')
 const intoStream = require('into-stream')
-const toZipStream = require('hyperdrive-to-zip-stream')
+const toZipStream = require('dwebfs-to-zip-stream')
 const slugify = require('slugify')
 
 const datDns = require('./dns')
@@ -52,7 +52,7 @@ exports.electronHandler = async function (request, respond) {
         statusCode: code,
         headers: {
           'Content-Type': 'text/html',
-          'Content-Security-Policy': "default-src 'unsafe-inline' beaker:;",
+          'Content-Security-Policy': "default-src 'unsafe-inline' dbrowser:;",
           'Access-Control-Allow-Origin': '*'
         },
         data: intoStream(errorPage(errorPageInfo || (code + ' ' + status)))
@@ -274,7 +274,7 @@ exports.electronHandler = async function (request, respond) {
       cleanup()
       return respondError(404, 'File Not Found', {
         errorDescription: 'File Not Found',
-        errorInfo: `Beaker could not find the file ${urlp.path}`,
+        errorInfo: `DBrowserX- could not find the file ${urlp.path}`,
         title: 'File Not Found'
       })
     }

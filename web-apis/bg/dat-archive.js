@@ -1,8 +1,8 @@
 const globals = require('../../globals')
 const path = require('path')
 const fs = require('fs')
-const parseDatURL = require('parse-dat-url')
-const pda = require('pauls-dat-api')
+const parseDatURL = require('parse-dweb-url')
+const pda = require('dbrowser-dweb-api')
 const concat = require('concat-stream')
 const pick = require('lodash.pick')
 const datDns = require('../../dat/dns')
@@ -26,7 +26,7 @@ const {
   InvalidURLError,
   ProtectedFileNotWritableError,
   InvalidPathError
-} = require('beaker-error-constants')
+} = require('dbrowser-error-messages')
 
 // exported api
 // =
@@ -40,8 +40,8 @@ module.exports = {
   async createArchive ({title, description, type, hidden, networked, links, template, prompt} = {}) {
     var newArchiveUrl
 
-    // only allow networked, hidden, and template to be set by beaker, for now
-    if (!this.sender.getURL().startsWith('beaker:')) {
+    // only allow networked, hidden, and template to be set by dbrowserx, for now
+    if (!this.sender.getURL().startsWith('dbrowser:')) {
       hidden = networked = template = undefined
     }
 
@@ -91,8 +91,8 @@ module.exports = {
   async forkArchive (url, {title, description, type, networked, hidden, links, prompt} = {}) {
     var newArchiveUrl
 
-    // only allow networked, hidden to be set by beaker, for now
-    if (!this.sender.getURL().startsWith('beaker:')) {
+    // only allow networked, hidden to be set by dbrowserx, for now
+    if (!this.sender.getURL().startsWith('dbrowser:')) {
       networked = hidden = undefined
     }
 
@@ -146,8 +146,8 @@ module.exports = {
     return timer(to(opts), async () => {
       var info = await datLibrary.getArchiveInfo(url)
 
-      // request from beaker internal sites: give all data
-      if (this.sender.getURL().startsWith('beaker:')) {
+      // request from dbrowserx internal sites: give all data
+      if (this.sender.getURL().startsWith('dbrowser:')) {
         // check that the local sync path is valid
         if (info && info.userSettings.localSyncPath) {
           const stat = await new Promise(resolve => {
@@ -193,8 +193,8 @@ module.exports = {
       if (!settings || typeof settings !== 'object') throw new Error('Invalid argument')
 
       // handle 'networked' specially
-      // also, only allow beaker to set 'networked' for now
-      if (('networked' in settings) && this.sender.getURL().startsWith('beaker:')) {
+      // also, only allow dbrowserx to set 'networked' for now
+      if (('networked' in settings) && this.sender.getURL().startsWith('dbrowser:')) {
         if (settings.networked === false) {
           await assertArchiveOfflineable(archive)
         }
@@ -538,7 +538,7 @@ module.exports = {
 
 // helper to check if filepath refers to a file that userland is not allowed to edit directly
 function assertUnprotectedFilePath (filepath, sender) {
-  if (sender.getURL().startsWith('beaker:')) {
+  if (sender.getURL().startsWith('dbrowser:')) {
     return // can write any file
   }
   if (filepath === '/' + DAT_MANIFEST_FILENAME) {
@@ -546,16 +546,16 @@ function assertUnprotectedFilePath (filepath, sender) {
   }
 }
 
-// temporary helper to make sure the call is made by a beaker: page
+// temporary helper to make sure the call is made by a dbrowser: page
 function assertTmpBeakerOnly (sender) {
-  if (!sender.getURL().startsWith('beaker:')) {
+  if (!sender.getURL().startsWith('dbrowser:')) {
     throw new PermissionsError()
   }
 }
 
 async function assertCreateArchivePermission (sender) {
-  // beaker: always allowed
-  if (sender.getURL().startsWith('beaker:')) {
+  // dbrowser: always allowed
+  if (sender.getURL().startsWith('dbrowser:')) {
     return true
   }
 
@@ -581,8 +581,8 @@ async function assertWritePermission (archive, sender) {
     throw new ArchiveNotWritableError('This archive has been deleted. Restore it to continue making changes.')
   }
 
-  // beaker: always allowed
-  if (sender.getURL().startsWith('beaker:')) {
+  // dbrowser: always allowed
+  if (sender.getURL().startsWith('dbrowser:')) {
     return true
   }
 
@@ -606,8 +606,8 @@ async function assertDeleteArchivePermission (archive, sender) {
   var archiveKey = archive.key.toString('hex')
   const perm = ('deleteDat:' + archiveKey)
 
-  // beaker: always allowed
-  if (sender.getURL().startsWith('beaker:')) {
+  // dbrowser: always allowed
+  if (sender.getURL().startsWith('dbrowser:')) {
     return true
   }
 
@@ -635,8 +635,8 @@ async function assertArchiveDeletable (archive) {
 }
 
 async function assertQuotaPermission (archive, senderOrigin, byteLength) {
-  // beaker: always allowed
-  if (senderOrigin.startsWith('beaker:')) {
+  // dbrowser: always allowed
+  if (senderOrigin.startsWith('dbrowser:')) {
     return
   }
 

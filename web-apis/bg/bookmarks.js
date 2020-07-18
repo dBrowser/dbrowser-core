@@ -1,7 +1,7 @@
 const globals = require('../../globals')
 const assert = require('assert')
 const normalizeUrl = require('normalize-url')
-const {PermissionsError} = require('beaker-error-constants')
+const {PermissionsError} = require('dbrowser-error-messages')
 const bookmarksDb = require('../../dbs/bookmarks')
 
 const NORMALIZE_OPTS = {
@@ -105,7 +105,7 @@ module.exports = {
 }
 
 async function assertPermission (sender, perm) {
-  if (sender.getURL().startsWith('beaker:')) {
+  if (sender.getURL().startsWith('dbrowser:')) {
     return true
   }
   if (await globals.permsAPI.queryPermission(perm, sender)) return true

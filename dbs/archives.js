@@ -4,7 +4,7 @@ const mkdirp = require('mkdirp')
 const Events = require('events')
 const datEncoding = require('dat-encoding')
 const jetpack = require('fs-jetpack')
-const {InvalidArchiveKeyError} = require('beaker-error-constants')
+const {InvalidArchiveKeyError} = require('dbrowser-error-messages')
 const db = require('./profile-data-db')
 const lock = require('../lib/lock')
 const {
@@ -68,7 +68,7 @@ exports.removeListener = events.removeListener.bind(events)
 // - optional `query` keys:
 //   - `isSaved`: bool
 //   - `isNetworked`: bool
-//   - `isOwner`: bool, does beaker have the secret key?
+//   - `isOwner`: bool, does dbrowserx have the secret key?
 //   - `type`: string, a type filter
 //   - `showHidden`: bool, show hidden dats
 //   - `key`: string, the key of the archive you want (return single result)

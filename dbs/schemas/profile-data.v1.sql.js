@@ -59,14 +59,14 @@ CREATE UNIQUE INDEX visits_stats_url ON visit_stats (url);
 INSERT INTO profiles (id) VALUES (0);
 
 -- default bookmarks
-INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Beaker Home', 'dat://beakerbrowser.com', 1);
+INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'DBrowserX- Home', 'dat://dbrowser.com', 1);
 INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Dat Project', 'dat://datproject.org', 1);
-INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, '@BeakerBrowser', 'https://twitter.com/beakerbrowser', 1);
+INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, '@DBrowser', 'https://twitter.com/dbrowser', 1);
 INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Hashbase', 'https://hashbase.io', 1);
-INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Documentation', 'dat://beakerbrowser.com/docs', 1);
-INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Report an issue', 'https://github.com/beakerbrowser/beaker/issues', 1);
-INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Explore the P2P Web', 'dat://explore.beakerbrowser.com/', 1);
-INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Support Beaker', 'https://opencollective.com/beaker', 1);
+INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Documentation', 'dat://dbrowser.com/docs', 1);
+INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Report an issue', 'https://github.com/dbrowser/dbrowser/issues', 1);
+INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Explore the P2P Web', 'dat://explore.dbrowser.com/', 1);
+INSERT INTO bookmarks (profileId, title, url, pinned) VALUES (0, 'Support DBrowserX-', 'https://opencollective.com/dbrowserx', 1);
 
 PRAGMA user_version = 1;
 `

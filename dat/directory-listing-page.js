@@ -1,5 +1,5 @@
 const {pluralize, makeSafe} = require('../lib/strings')
-const {stat, readdir} = require('pauls-dat-api')
+const {stat, readdir} = require('dbrowser-dweb-api')
 const {join, relative} = require('path')
 
 const styles = `<style>

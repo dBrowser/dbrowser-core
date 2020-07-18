@@ -1,9 +1,9 @@
-const {InvalidDomainName} = require('beaker-error-constants')
+const {InvalidDomainName} = require('dbrowser-error-messages')
 const sitedataDb = require('../dbs/sitedata')
 const {DAT_HASH_REGEX} = require('../lib/const')
 
 // instantate a dns cache and export it
-const datDns = require('dat-dns')({
+const datDns = require('dweb-dns')({
   persistentCache: {read, write}
 })
 module.exports = datDns

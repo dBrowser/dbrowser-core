@@ -4,12 +4,12 @@ const through2 = require('through2')
 const datLibrary = require('../../../dat/library')
 const datDns = require('../../../dat/dns')
 const archivesDb = require('../../../dbs/archives')
-const {PermissionsError} = require('beaker-error-constants')
+const {PermissionsError} = require('dbrowser-error-messages')
 
 // constants
 // =
 
-const API_DOCS_URL = 'https://beakerbrowser.com/docs/apis/experimental-library.html'
+const API_DOCS_URL = 'https://dbrowser.com/docs/apis/experimental-library.html'
 const API_PERM_ID = 'experimentalLibrary'
 const REQUEST_ADD_PERM_ID = 'experimentalLibraryRequestAdd'
 const REQUEST_REMOVE_PERM_ID = 'experimentalLibraryRequestRemove'
